@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use App\Providers\Filament\StudentPanelProvider;
+use App\Providers\Filament\TeacherPanelProvider;
+use Filament\Facades\Filament;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -19,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Filament::registerPanelProvider(StudentPanelProvider::class);
+        // Filament::registerPanelProvider(TeacherPanelProvider::class);
     }
 }
