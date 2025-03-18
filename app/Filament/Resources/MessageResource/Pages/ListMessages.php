@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\TeacherResource\Pages;
+namespace App\Filament\Resources\MessageResource\Pages;
 
-use App\Filament\Resources\TeacherResource;
+use App\Filament\Resources\MessageResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListTeachers extends ListRecords
+class ListMessages extends ListRecords
 {
-    protected static string $resource = TeacherResource::class;
+    protected static string $resource = MessageResource::class;
 
     protected function getHeaderActions(): array
     {

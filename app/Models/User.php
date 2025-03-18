@@ -2,22 +2,9 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasRoles;
-
-    protected $fillable = ['name', 'email', 'password', 'role'];
-
-    public function teacher()
-    {
-        return $this->hasOne(Teacher::class);
-    }
-
-    public function student()
-    {
-        return $this->hasOne(Student::class);
-    }
+    //
 }

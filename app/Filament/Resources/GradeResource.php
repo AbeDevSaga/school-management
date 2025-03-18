@@ -23,7 +23,15 @@ class GradeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('subject_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('student_id')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('marks')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -31,7 +39,23 @@ class GradeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('subject_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('student_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('marks')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
