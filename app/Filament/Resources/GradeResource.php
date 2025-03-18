@@ -11,7 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class GradeResource extends Resource
 {
@@ -58,8 +57,39 @@ class GradeResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                // Date Range Filter for created_at
+                Forms\Components\DatePicker::make('start_date')
+                    ->label('Start Date')
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('start_date', $state);
+                    }),
+
+                Forms\Components\DatePicker::make('end_date')
+                    ->label('End Date')
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $set('end_date', $state);
+                    }),
             ])
+            ->query(function (Builder $query) {
+                // Get the start and end dates
+                $startDate = request()->input('start_date');
+                $endDate = request()->input('end_date');
+
+                if ($startDate && $endDate) {
+                    // Apply filter logic: Filter grades within the date range
+                    return $query->whereBetween('created_at', [$startDate, $endDate]);
+                } elseif ($startDate) {
+                    // Apply filter if only start date is selected
+                    return $query->whereDate('created_at', '>=', $startDate);
+                } elseif ($endDate) {
+                    // Apply filter if only end date is selected
+                    return $query->whereDate('created_at', '<=', $endDate);
+                }
+
+                return $query;
+            })
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
@@ -73,7 +103,7 @@ class GradeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // Define any relations if necessary
         ];
     }
 
